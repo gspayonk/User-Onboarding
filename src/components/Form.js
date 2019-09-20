@@ -29,14 +29,6 @@ const UserForm = ({ errors, touched, values, status }) => {
         <Field type="text" name="password" placeholder="Your password" />
         {touched.email && errors.email && <p className="error">{errors.password}</p>}
 
-        {/* <Field component="select" className="food-select" name="diet">
-            <option>Please Choose an Option</option>
-            <option value="herbivore">Herbivore</option>
-            <option value="carnivore">Carnivore</option>
-            <option value="omnivore">Omnivore</option>
-        </Field>
-        {touched.diet && errors.diet && <p className="error">{errors.diet}</p>} */}
-
         <label className="checkbox-container">
             Terms of Service
             <Field
@@ -47,16 +39,6 @@ const UserForm = ({ errors, touched, values, status }) => {
         <span className="check-mark" />
         </label>
         {touched.terms && errors.terms && <p className="error">{errors.terms}</p>}
-
-        {/* <Field
-            component="textarea"
-            type="text"
-            name="notes"
-            placeholder="Notes"
-        />
-        {touched.notes && errors.notes && (
-            <p className="error">{errors.notes}</p>
-        )} */}
 
         <button type="submit">Submit!</button>
     </Form>
@@ -76,7 +58,7 @@ const UserForm = ({ errors, touched, values, status }) => {
 
 
     const FormikUserForm = withFormik({
-        // object destructuring. We could do values.species but we are destructuring it so we can just put species. You see the same thing in Props a lot so instead of props.values you would see {values}
+        
         mapPropsToValues({ name, email, password, terms }) {
         return {
             terms: terms || false,
@@ -92,13 +74,12 @@ const UserForm = ({ errors, touched, values, status }) => {
             email: Yup.string().required(),
             password: Yup.string(),
             terms: Yup.string().required('You must accept our Terms and Conditions to submit!'),
-            // .oneOf(["omnivore", "carnivore", "herbivore"])
-            // .required("Please pick a diet type")
+        
         }),
     
         handleSubmit(values, { setStatus }) {
         axios
-            // values is our object with all our data on it.
+        
             .post("https://reqres.in/api/users/", values)
             .then(res => {
                 setStatus(res.data);
@@ -106,7 +87,7 @@ const UserForm = ({ errors, touched, values, status }) => {
             })
             .catch(err => console.log(err.response));
         }
-      })(UserForm); // currying functions in Javascript
+    })(UserForm); 
         console.log("This is the HOC", FormikUserForm);
 
     export default FormikUserForm;
